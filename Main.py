@@ -23,7 +23,7 @@ def encontrarPontos(imagem):
     lf = cf = 0  # LINHA INICIAL E COLUNA FINAL; COLUNA INICIAL E FINAL
     ci = li = 1000 # COLUNA INICIAL E LINHA FINAL
     for x in reversed(range(imagem.shape[0])):  # ALTURA DE BAIXO PRA CIMA
-        if x < 300: break #NAO PERCORRER TODA A IMAGEM, CONSIDERA QUE O PONTO PROCURADO ESTEJA NA PARTE INFERIOR DA IMAGEM
+        if x < 300: break # NAO PERCORRER TODA A IMAGEM, CONSIDERA QUE O PONTO PROCURADO ESTEJA NA PARTE INFERIOR DA IMAGEM
         for y in range(imagem.shape[1]):  # LARGURA
             (b, g, r) = imagem[x, y]
             if (b, g, r) == (255, 255, 255):
