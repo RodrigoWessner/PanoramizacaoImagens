@@ -29,35 +29,24 @@ class Busca_Curvas:
         plt.show()
         cv2.waitKey(0)
 
-    def escreve(img, texto, cor=(255, 0, 0)):
-        fonte = cv2.FONT_HERSHEY_SIMPLEX
-
-        cv2.putText(img, texto, (10, 20), fonte, 0.5, cor, 0, cv2.LINE_AA)
 
     def area_teste(self):
-        img_colorida = cv2.imread("pano2.png")
-        img = cv2.cvtColor(img_colorida, cv2.COLOR_BGR2GRAY)
-        suave = cv2.blur(img, (7, 7))
+        #img = cv2.imread("pano1_azul.png", -1)
+        img = cv2.imread("pano1.png", -1)
 
-        T = cv2.threshold(suave, 160, 255, cv2.THRESH_BINARY)
-        bin = suave.copy()
-        bin[bin > T] = 255
-        bin[bin < T] = 0
-        bin = cv2.bitwise_not(bin)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-        bordas = cv2.Canny(bin, 70, 150)
-        (lx, objetos, lx) = cv2.findContours(bordas.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        temp = np.vstack([
-            np.hstack([img, suave]),
-            np.hstack([bin, bordas])
-        ])
-        cv2.imshow("Quantidade de objetos: " + str(len(objetos)), temp)
+        binary = cv2.bitwise_not(gray)
+        cv2.imshow("cinza", gray)
+
+        (contours, hierarchy) = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+        for contour in (contours, hierarchy):
+            (x, y, w, h) = cv2.boundingRect(contour)
+            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            cv2.imshow("teste", img)
         cv2.waitKey(0)
-        imgC2 = img_colorida.copy()
-        cv2.drawContours(imgC2, objetos, -1, (255, 0, 0), 2)
-        self.escreve(imgC2, str(len(objetos)) + " objetos encontrados!")
-        cv2.imshow("Resultado", imgC2)
-        cv2.waitKey(0)
+
 
 
 Busca_Curvas().area_teste()
