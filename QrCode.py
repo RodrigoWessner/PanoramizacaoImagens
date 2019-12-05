@@ -1,8 +1,14 @@
-import qrcode
+# Import QRCode from pyqrcode 
+import pyqrcode
+from pyqrcode import QRCode
 
-class QrCode(object):
-    def __init__(self, nome):
-        self.Nome = nome
 
-    def criaImagem(self):
-        return qrcode.make(self.Nome)
+# String which represent the QR code
+def generate_qrCode():
+    s = "Patrick Martini, " \
+        "Rodrigo Wessner - " \
+        "Trabalho de Computacoo Grafica"
+
+    url = pyqrcode.create(s)
+    url.svg("myqr.svg", scale=1)
+    return
